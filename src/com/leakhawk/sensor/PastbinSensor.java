@@ -59,9 +59,12 @@ public class PastbinSensor extends SensorJob {
 			
 			for( FeedEntry entry : newFeedEntryList ){				
 				getAggregator().addFeedEntry(entry);	
-				//System.out.println( "Added to Queue : " + entry );
+				System.out.println( "Added to Queue : " + entry );
 			}
 			
+			System.out.println("Size : " + newFeedEntryList.size() );
+			System.out.print("\n ############################################################# \n");
+						
 			try {
 				Thread.sleep( 60000 );
 			} catch (InterruptedException e) {				
