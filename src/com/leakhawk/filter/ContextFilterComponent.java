@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.leakhawk.filter.regex.RegExpressionHandler;
 import com.leakhawk.main.LeakhawkManager;
 import com.leakhawk.model.FeedEntry;
 
@@ -62,33 +63,30 @@ public class ContextFilterComponent {
 		BufferedReader reader = null;		
 		try {
 				
-			String regEx1 = "^4[0-9]{12}(?:[0-9]{3})?$";
+			List<RegExpressionHandler> regExpHandlerList = new ArrayList<RegExpressionHandler>();
 			
-			String regEx2 = "^5[1-5][0-9]{14}$";
-
-		    // Create a Pattern object
-		    Pattern pattern1 = Pattern.compile(regEx1);		    
-		    Pattern pattern2 = Pattern.compile(regEx2);
-		    
-		    // Now create matcher object.
-		    		      
-			
+			regExpHandlerList.add( new RegExpressionHandler("^4[0-9]{12}(?:[0-9]{3})?$") );
+			regExpHandlerList.add( new RegExpressionHandler("^5[1-5][0-9]{14}$") );
+								
 		    URL my_url = new URL(entry.getScrapperUrl());
 			reader = new BufferedReader(new InputStreamReader( my_url.openStream() ));			   
 			String line;
 			
 			while ((line = reader.readLine()) != null) {								
 				
-				Matcher matcher1 = pattern1.matcher(line);
-				if ( matcher1.find() ) {
-					return true;
-				}
-				
-				Matcher matcher2 = pattern2.matcher(line);
-				if ( matcher2.find() ) {
-					return true;
-				}					
+				for( RegExpressionHandler regExpressionHandler : regExpHandlerList){					
+					regExpressionHandler.applyRegEx( line );
+				}				
 			}	
+			
+			int totalMatchingCount = 0;
+			for( RegExpressionHandler regExpressionHandler : regExpHandlerList){				
+				totalMatchingCount = totalMatchingCount + regExpressionHandler.getNumberOfMatches();
+			}
+			
+			if( totalMatchingCount > 0 ){
+				return true;
+			}
 			
 		} catch (IOException e) {
 			e.printStackTrace();

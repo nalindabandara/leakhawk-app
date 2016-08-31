@@ -1,6 +1,9 @@
 package com.leakhawk.model;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.simple.JSONObject;
 
 public class FeedEntry {
@@ -21,6 +24,7 @@ public class FeedEntry {
 	
 	private String entryFileName;
 
+	private List<String> matchingKeyWordList;
 	
 	public FeedEntry( JSONObject jsonObj ){
 		
@@ -95,6 +99,21 @@ public class FeedEntry {
 
 	public void setEntryFileName(String entryFileName) {
 		this.entryFileName = entryFileName;
+	}
+
+
+	
+	public List<String> getMatchingKeyWordList() {
+		if( matchingKeyWordList == null){			 
+			matchingKeyWordList = new ArrayList<String>();
+			return matchingKeyWordList;
+		}
+		return matchingKeyWordList;
+	}
+
+
+	public void setMatchingKeyWordList(List<String> matchingKeyWordList) {
+		this.matchingKeyWordList = matchingKeyWordList;
 	}
 
 
