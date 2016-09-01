@@ -62,7 +62,7 @@ public class FileManager {
 				}
 				
 				writer.flush();
-				System.out.println("Entry successfully saved to : " + file.getAbsolutePath() );
+				//System.out.println("Entry successfully saved to : " + file.getAbsolutePath() );
 			}
 			
 		} catch (IOException e) {

@@ -2,9 +2,12 @@ package com.leakhawk.model;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.json.simple.JSONObject;
+
+import com.leakhawk.filter.regex.RegExpResult;
 
 public class FeedEntry {
 
@@ -24,7 +27,7 @@ public class FeedEntry {
 	
 	private String entryFileName;
 
-	private List<String> matchingKeyWordList;
+	private HashMap<String, RegExpResult> contextFilterResultMap = new HashMap<String, RegExpResult>();
 	
 	public FeedEntry( JSONObject jsonObj ){
 		
@@ -101,29 +104,51 @@ public class FeedEntry {
 		this.entryFileName = entryFileName;
 	}
 
+	public HashMap<String, RegExpResult> getContextFilterResultMap() {
+		return contextFilterResultMap;
+	}
+
+
+	public void setContextFilterResultMap(
+			HashMap<String, RegExpResult> contextFilterResultMap) {
+		this.contextFilterResultMap = contextFilterResultMap;
+	}
 
 	
-	public List<String> getMatchingKeyWordList() {
-		if( matchingKeyWordList == null){			 
-			matchingKeyWordList = new ArrayList<String>();
-			return matchingKeyWordList;
+	public boolean isPassedByContextFilter(){
+		
+		int totalCount = 0;
+		for( RegExpResult result : this.contextFilterResultMap.values() ){			
+			totalCount = totalCount + result.getMatchingCount();
 		}
-		return matchingKeyWordList;
+		
+		if( totalCount > 0 ){
+			return true;
+		}
+		return false;
 	}
+	
 
 
-	public void setMatchingKeyWordList(List<String> matchingKeyWordList) {
-		this.matchingKeyWordList = matchingKeyWordList;
-	}
-
-
+	
 	@Override
 	public String toString() {
-		return "FeedEntry [scrapperUrl=" + scrapperUrl + ", key=" + key
-				+ ", title=" + title + ", user=" + user + ", syntax=" + syntax
-				+ "]";
+		
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("FeedEntry :\n  ScrapperUrl = ").append( scrapperUrl ).append("\n");
+		sb.append("  Date = ").append(date).append("\n");
+		sb.append("  Key = ").append(key).append("\n");
+		sb.append("  Title = " ).append(title).append("\n");
+		sb.append("  User = ").append(user).append("\n");
+		sb.append("  Syntax = ").append( syntax ).append("\n");
+		sb.append("  Entry filename = ").append(entryFileName).append("\n");
+		sb.append("  ContextFilter Result :").append("\n  ").append(contextFilterResultMap).append("\n");
+		
+		return sb.toString();
 	}
-	
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

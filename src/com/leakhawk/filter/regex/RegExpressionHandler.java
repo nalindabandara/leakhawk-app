@@ -5,20 +5,20 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.leakhawk.model.FeedEntry;
+
 public class RegExpressionHandler {
 
+	private String regExpKey;
+	
 	private String regExpression;
 	
 	private  Pattern pattern;
 	
-	private List<String> matchingWords = new ArrayList<String>();
-	
-	private int numberOfMatches;
-
-	
-	public RegExpressionHandler( String regEx ){
+	public RegExpressionHandler( String regExpKey, String regExp ){
 		
-		this.regExpression = regEx;
+		this.regExpKey = regExpKey;
+		this.regExpression = regExp;
 		this.pattern = Pattern.compile( this.regExpression );		
 	}
 	
@@ -31,22 +31,6 @@ public class RegExpressionHandler {
 		this.regExpression = regExpression;
 	}
 
-	public List<String> getMatchingWords() {
-		return matchingWords;
-	}
-
-	public void setMatchingWords(List<String> matchingWords) {
-		this.matchingWords = matchingWords;
-	}
-
-	public int getNumberOfMatches() {
-		return numberOfMatches;
-	}
-
-	public void setNumberOfMatches(int numberOfMatches) {
-		this.numberOfMatches = numberOfMatches;
-	}
-			
 	public Pattern getPattern() {
 		return pattern;
 	}
@@ -55,15 +39,29 @@ public class RegExpressionHandler {
 		this.pattern = pattern;
 	}
 
+	public String getRegExpKey() {
+		return regExpKey;
+	}
 
-	public void applyRegEx( String line ){
+	public void setRegExpKey(String regExpKey) {
+		this.regExpKey = regExpKey;
+	}
+
+
+	public void applyRegEx( String line, FeedEntry entry ){
+		
+		RegExpResult result = entry.getContextFilterResultMap().get( this.regExpKey);
 		
 		Matcher matcher = getPattern().matcher(line);
-		if( matcher.find()){							
-			if( matcher.group() != null ){
-				getMatchingWords().add( matcher.group() );				
-				numberOfMatches = numberOfMatches + 1;		
-			}			
+		
+		while ( matcher.find() ){
+						
+			if( result == null ){				
+				entry.getContextFilterResultMap().put(this.regExpKey, new RegExpResult( this.regExpKey, matcher.group() ));				
+			} else {
+				result.incrementCount();
+				result.addMatchingWord( matcher.group() );
+			}				
 		}
 	} 
 	

@@ -13,11 +13,14 @@ import java.util.regex.Pattern;
 import com.leakhawk.filter.regex.RegExpressionHandler;
 import com.leakhawk.main.LeakhawkManager;
 import com.leakhawk.model.FeedEntry;
+import com.leakhawk.util.LeakhawkUtils;
 
 
 
 public class ContextFilterComponent {
 
+	public static List<RegExpressionHandler> regExpHandlerList;
+	
 	private List<FeedEntry> originalEntryList;
 
 	private List<FeedEntry> filteredEntryList = new ArrayList<FeedEntry>();
@@ -37,6 +40,14 @@ public class ContextFilterComponent {
 		cf.regExpTestDrive();
 	}
 	
+	public static void loadRegExpList( int rgexpCount ){
+		
+		regExpHandlerList = new ArrayList<RegExpressionHandler>();		
+		for( int i = 1; i <= rgexpCount; i++ ){
+			regExpHandlerList.add( new RegExpressionHandler( ("regexp" + i), LeakhawkUtils.properties.getProperty("regexp" + i) ) );
+		}					
+	}
+	
 	public void applyContextFilter(){
 		
 		if( LeakhawkManager.isApplyingContextFilter){
@@ -46,8 +57,10 @@ public class ContextFilterComponent {
 				if( regExpressionMatched( entry ) ){
 					
 					filteredEntryList.add(entry);
-					System.out.println("*******************  Context Filter Match Fount ******************");
+					System.out.println("************************************  Context Filter Match Fount ************************************");
 					System.out.println("FILE NAME : " + entry.getEntryFileName());
+					System.out.print( entry.toString());
+					System.out.println("*****************************************************************************************************");
 				}
 			}
 
@@ -58,16 +71,11 @@ public class ContextFilterComponent {
 		}
 	}
 	
-	private boolean regExpressionMatched( FeedEntry entry ){
+	private static boolean regExpressionMatched( FeedEntry entry ){
 				
 		BufferedReader reader = null;		
 		try {
-				
-			List<RegExpressionHandler> regExpHandlerList = new ArrayList<RegExpressionHandler>();
-			
-			regExpHandlerList.add( new RegExpressionHandler("^4[0-9]{12}(?:[0-9]{3})?$") );
-			regExpHandlerList.add( new RegExpressionHandler("^5[1-5][0-9]{14}$") );
-								
+															
 		    URL my_url = new URL(entry.getScrapperUrl());
 			reader = new BufferedReader(new InputStreamReader( my_url.openStream() ));			   
 			String line;
@@ -75,25 +83,16 @@ public class ContextFilterComponent {
 			while ((line = reader.readLine()) != null) {								
 				
 				for( RegExpressionHandler regExpressionHandler : regExpHandlerList){					
-					regExpressionHandler.applyRegEx( line );
+					regExpressionHandler.applyRegEx( line, entry );
 				}				
 			}	
 			
-			int totalMatchingCount = 0;
-			for( RegExpressionHandler regExpressionHandler : regExpHandlerList){				
-				totalMatchingCount = totalMatchingCount + regExpressionHandler.getNumberOfMatches();
-			}
-			
-			if( totalMatchingCount > 0 ){
-				return true;
-			}
+			return entry.isPassedByContextFilter();
 			
 		} catch (IOException e) {
-			e.printStackTrace();
-			
+			e.printStackTrace();			
 		} catch (Exception fe) {
-			fe.printStackTrace();
-			
+			fe.printStackTrace();			
 		}		
 		finally {			
 			try {
@@ -108,6 +107,9 @@ public class ContextFilterComponent {
 		}			      
 		return false;
 	}
+
+	
+	
 
 	
 	private void regExpTestDrive(){

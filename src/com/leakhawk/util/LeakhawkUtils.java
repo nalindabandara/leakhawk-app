@@ -9,6 +9,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
 
+import com.leakhawk.filter.ContextFilterComponent;
+
 public class LeakhawkUtils {
 
 	public static Properties properties = new Properties();
@@ -25,8 +27,7 @@ public class LeakhawkUtils {
 
 			// load a properties file
 			properties.load(input);
-			
-			//allowedSyntaxList = Arrays.asList( prop.getProperty("allowed.syntax.list").split(","));
+			ContextFilterComponent.loadRegExpList(2);
 			
 			// get the property value and print it out
 			//System.out.println( "Key Word List : " + keyWordList );
