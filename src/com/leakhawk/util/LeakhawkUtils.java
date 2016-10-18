@@ -27,7 +27,7 @@ public class LeakhawkUtils {
 
 			// load a properties file
 			properties.load(input);
-			ContextFilterComponent.loadRegExpList(2);
+			ContextFilterComponent.loadRegExpList(17);
 			
 			// get the property value and print it out
 			//System.out.println( "Key Word List : " + keyWordList );

@@ -1,0 +1,45 @@
+@relation CC
+
+@attribute $CC1 numeric
+@attribute $CC2 numeric
+@attribute $CC3 numeric
+@attribute $CC4 numeric
+@attribute $CC5 numeric
+@attribute $CC6 numeric
+@attribute $CC7 numeric
+@attribute $CC8 numeric
+@attribute $CC9 numeric
+@attribute $CC10 numeric
+@attribute $CC11 numeric
+@attribute $CC12 numeric
+@attribute $CC13 numeric
+@attribute $CC14 numeric
+@attribute $CC15 numeric
+@attribute $CC16 numeric
+@attribute $CC17 numeric
+@attribute $CC18 numeric
+@attribute $CC19 numeric
+@attribute $CC20 numeric
+@attribute $CC21 numeric
+@attribute $CC22 numeric
+@attribute $CC23 numeric
+@attribute $CC24 numeric
+@attribute $CC25 numeric
+@attribute $CC26 numeric
+@attribute $CC27 numeric
+@attribute $CC28 numeric
+@attribute $CC29 numeric
+@attribute $CC30 numeric
+@attribute $CC31 numeric
+@attribute $CC32 numeric
+@attribute $CC33 numeric
+@attribute $CC34 numeric
+@attribute $CC35 numeric
+@attribute #N numeric
+@attribute #L numeric
+@attribute #A numeric
+@attribute #NP numeric
+@attribute #CP numeric
+@attribute @@class@@ {CC,Non-CC}
+
+@data

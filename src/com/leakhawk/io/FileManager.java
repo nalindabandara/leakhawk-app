@@ -19,10 +19,11 @@ import com.leakhawk.util.LeakhawkUtils;
 
 public class FileManager {
 	
-	private static String originalFilePath = LeakhawkUtils.properties.getProperty("original.file.path");
+	public static String originalFilePath = LeakhawkUtils.properties.getProperty("original.file.path");
 	
-	private static String contextFilePath = LeakhawkUtils.properties.getProperty("context.file.path");
+	public static String contextFilePath = LeakhawkUtils.properties.getProperty("context.file.path");
 	
+	public static String contentFilePath = LeakhawkUtils.properties.getProperty("content.file.path");
 		
 	public void saveEntryList( List<FeedEntry> entryList, String filterType ){
 
@@ -48,6 +49,7 @@ public class FileManager {
 			fileName = getValidFileName( entry );
 			
 			entry.setEntryFileName(fileName);
+			entry.setFullFilePath( filePath + "/" + fileName );
 			URL urlObj = new URL( entry.getScrapperUrl() );
 			entry.setEntryStream( urlObj.openStream() );
 			

@@ -121,7 +121,7 @@ public class ContextFilterComponent {
 			
 			//String regEx1 = "[0-9]*";
 			
-			String regEx2 = "^5[1-5][0-9]{14}$";
+			String regEx2 = "^4[1-5][0-9]{14}$";
 
 		    // Create a Pattern object
 		    Pattern pattern1 = Pattern.compile(regEx1);		    

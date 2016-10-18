@@ -24,6 +24,8 @@ public class FeedEntry {
 	private InputStream entryStream;
 	
 	private String entryFileName;
+	
+	private String fullFilePath;
 
 	private HashMap<String, RegExpResult> contextFilterResultMap = new HashMap<String, RegExpResult>();
 	
@@ -110,9 +112,18 @@ public class FeedEntry {
 	public void setContextFilterResultMap(
 			HashMap<String, RegExpResult> contextFilterResultMap) {
 		this.contextFilterResultMap = contextFilterResultMap;
+	}	
+	
+	public String getFullFilePath() {
+		return fullFilePath;
 	}
 
-	
+
+	public void setFullFilePath(String fullFilePath) {
+		this.fullFilePath = fullFilePath;
+	}
+
+
 	public boolean isPassedByContextFilter(){
 		
 		int totalCount = 0;

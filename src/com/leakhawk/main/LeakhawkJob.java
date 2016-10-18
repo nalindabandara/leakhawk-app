@@ -2,6 +2,7 @@ package com.leakhawk.main;
 
 import java.util.List;
 
+import com.leakhawk.classifier.ContentClassifier;
 import com.leakhawk.filter.ContextFilterComponent;
 import com.leakhawk.filter.PreFilterComponent;
 import com.leakhawk.io.DBManager;
@@ -40,6 +41,32 @@ public class LeakhawkJob extends Thread {
 			List<FeedEntry> contextFilteredList = contextFilterComponent.getFilteredEntryList();
 			fileManager.saveEntryList(contextFilteredList, CONTEXT_FILTER);
 			dbManager.saveContextFeedEntryBatch( contextFilteredList );
+			
+			for( FeedEntry entry : contextFilteredList ){
+				
+				ContentClassifier contentClassifier = new ContentClassifier();				
+				contentClassifier.setScriptFilePath( "CC/CC_classifier.sh" );				
+				contentClassifier.setInputFilePath( entry.getFullFilePath());	
+				contentClassifier.setInputFileName(entry.getEntryFileName());
+				if( contentClassifier.classify().equals("CC")){
+					
+					
+					
+				}
+				
+				
+				
+//				ContentClassifier contentClassifier = new ContentClassifier();				
+//				contentClassifier.setScriptFilePath( "CC/CC_classifier.sh" );				
+//				contentClassifier.setInputFilePath( entry.getFullFilePath());
+//				contentClassifier.classify();
+				
+				
+			}
+			
+			
+			
+			
 												
 		}
 	}
