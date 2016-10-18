@@ -88,7 +88,7 @@ i="$1";
 
 	item="\$CC1"; for i in {2..35}; do item+=,"\$CC$i";done;item+="$string";eval "echo $item">>vector.txt
 #	k=$( basename "$i" ".txt");
-	cat "header.txt" "/home/nalinda/oct/leakhawk-app/CC/vector.txt" >> $j.arff 
+	cat "/home/nalinda/oct/leakhawk-app/CC/header.txt" "/home/nalinda/oct/leakhawk-app/CC/vector.txt" >> $j.arff 
 	mv "$j.arff" "/home/nalinda/oct/IN/sensitive/"
 	rm -rf vector.txt
 
