@@ -23,7 +23,11 @@ public class LeakhawkUtils {
 		InputStream input = null;
 		try {
 			System.out.println("************* Reading the configuration file ***************");
-			input = new FileInputStream("config.properties");
+			
+			input = LeakhawkUtils.class.getClassLoader()
+                    .getResourceAsStream("config.properties");
+			
+			//input = new FileInputStream("config.properties");
 
 			// load a properties file
 			properties.load(input);
