@@ -1,0 +1,26 @@
+@relation PK
+
+@attribute $PK1 numeric
+@attribute $PK2 numeric
+@attribute $PK3 numeric
+@attribute $PK4 numeric
+@attribute $PK5 numeric
+@attribute $PK6 numeric
+@attribute $PK7 numeric
+@attribute $PK8 numeric
+@attribute $PK9 numeric
+@attribute $PK10 numeric
+@attribute $PK11 numeric
+@attribute $PK12 numeric
+@attribute $PK13 numeric
+@attribute $PK14 numeric
+@attribute $PK15 numeric
+@attribute $PK16 numeric
+@attribute $PK17 numeric
+@attribute $PK18 numeric
+@attribute $PK19 numeric
+@attribute $PK20 numeric
+@attribute $PK21 numeric
+@attribute @@class@@ {PK,no}
+
+@data

@@ -1,0 +1,21 @@
+@relation 1
+
+@attribute $WD1 numeric
+@attribute $WD2 numeric
+@attribute $WD3 numeric
+@attribute $WD4 numeric
+@attribute $WD5 numeric
+@attribute $WD6 numeric
+@attribute $WD7 numeric
+@attribute $WD8 numeric
+@attribute $WD9 numeric
+@attribute $WD10 numeric
+@attribute $WD11 numeric
+@attribute $WD12 numeric
+@attribute $WD13 numeric
+@attribute $WD14 numeric
+@attribute $WD15 numeric
+@attribute $WD16 numeric
+@attribute @@class@@ {WD,non}
+
+@data

@@ -77,18 +77,9 @@ i="$1";
 
 	string=",${#N},${#L},${#A},$NP,$CP,?"
 
-#	echo "$FN"$','"$a"$','"$b"$','"$c"$','"$NP"$','"$CP";
-#	echo "$FN"$','"$CC1"$','"$CC2"$','"$CC3"$','"$CC4"$','"$CC5"$','"$CC6"$','"${#N}"$','"${#L}"$','"${#A}"$','"$NP"$','"$CP"$','"$CC7"$','"$CC8"$','"$CC9"$','"$CC10"$','"$CC11"$','"$CC12"$','"$CC13"$','"$CC14"$','"$CC15"$','"$CC16";
-
-#	echo "$CC1"$','"$CC2"$','"$CC3"$','"$CC4"$','"$CC5"$','"$CC6"$','"${#N}"$','"${#L}"$','"${#A}"$','"$NP"$','"$CP"$','"$CC7"$','"$CC8"$','"$CC9"$','"$CC10"$','"$CC11"$','"$CC12"$','"$CC13"$','"$CC14"$','"$CC15"$','"$CC16"$','"?";
-
-#	echo "$CC1"$','"$CC2"$','"$CC3"$','"$CC4"$','"$CC5"$','"$CC6"$','"${#N}"$','"${#L}"$','"${#A}"$','"$NP"$','"$CP"$','"$CC7"$','"$CC8"$','"$CC9"$','"$CC10"$','"$CC11"$','"$CC12"$','"$CC13"$','"$CC14"$','"$CC15"$','"$CC16";
-
-#	item="\$CC1"; string=""${#N}",${#L}"${#A}",$NP,$CP""; for i in {2..40}; do item+=,"\$CC$i";done;item+="$string";eval "echo $item"
-
-	item="\$CC1"; for i in {2..35}; do item+=,"\$CC$i";done;item+="$string";eval "echo $item">>vector.txt
+	item="\$CC1"; for i in {2..35}; do item+=,"\$CC$i";done;item+="$string";eval "echo $item">>"/home/nalinda/oct/leakhawk-app/Content/CC/vector.txt"
 #	k=$( basename "$i" ".txt");
-	cat "/home/nalinda/oct/leakhawk-app/CC/header.txt" "/home/nalinda/oct/leakhawk-app/CC/vector.txt" >> $j.arff 
-	mv "$j.arff" "/home/nalinda/oct/IN/sensitive/"
-	rm -rf vector.txt
+	cat "/home/nalinda/oct/leakhawk-app/Content/CC/header.txt" "/home/nalinda/oct/leakhawk-app/Content/CC/vector.txt" >> $j.CC.arff 
+	mv "$j.CC.arff" "/home/nalinda/oct/IN/sensitive/"
+	rm -rf "/home/nalinda/oct/leakhawk-app/Content/CC/vector.txt"
 

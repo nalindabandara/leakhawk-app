@@ -14,16 +14,20 @@ public class ContentClassifier {
 	
 	private String scriptFilePath;
 	
+	private String predictorScriptFilePath;
+	
 
 	public static void main( String[] args ){
 		
+		
+		System.out.println("echo");
 		try {
-            ProcessBuilder pb = new ProcessBuilder("/bin/bash", "CC/CC_classifier.sh", "CC/CC_001_CC_BY_HEXX7.txt");
+            ProcessBuilder pb = new ProcessBuilder("/bin/bash", "Content/CC/CC_classifier.sh", "/home/nalinda/oct/leakhawk-app/Content/CC/temp/CC_001_CC_BY_HEXX7");
             final Process process = pb.start();
 
             Thread.sleep(1000);
-            
-            ProcessBuilder pbVal = new ProcessBuilder("/bin/bash", "CC/CC_validator.sh", "CC/CC_001_CC_BY_HEXX7.arff");
+    		System.out.println("echo2");            
+            ProcessBuilder pbVal = new ProcessBuilder("/bin/bash", "Content/CC/CC_validator.sh", "/home/nalinda/oct/leakhawk-app/Content/CC/temp/CC_001_CC_BY_HEXX7.arff");
             final Process processVal = pbVal.start();
 
             
@@ -51,16 +55,23 @@ public class ContentClassifier {
 	}
 
 
-	public String getScriptFilePath() {
+	public String getARFFScriptFilePath() {
 		return scriptFilePath;
 	}
 
 
-	public void setScriptFilePath(String scriptFilePath) {
+	public void setARFFScriptFilePath(String scriptFilePath) {
 		this.scriptFilePath = scriptFilePath;
 	}
 	
-	
+	public String getPredictorScriptFilePath() {
+		return predictorScriptFilePath;
+	}
+
+
+	public void setPredictorScriptFilePath(String predictorScriptFilePath) {
+		this.predictorScriptFilePath = predictorScriptFilePath;
+	}	
 	
 	public String getInputFileName() {
 		return inputFileName;
@@ -76,12 +87,13 @@ public class ContentClassifier {
 		
 		StringBuilder sb = new StringBuilder();
 		try {
-            ProcessBuilder pb = new ProcessBuilder("/bin/bash", "CC/CC_classifier.sh", getInputFilePath());
+            ProcessBuilder pb = new ProcessBuilder("/bin/bash", getARFFScriptFilePath(), getInputFilePath());
             final Process process = pb.start();
 
             Thread.sleep(1000);
-            
-            ProcessBuilder pbVal = new ProcessBuilder("/bin/bash", "CC/CC_validator.sh", FileManager.contentFilePath + getInputFileName() + ".arff");
+/*         System.out.println(FileManager.contentFilePath);
+         System.out.println(getInputFileName());*/
+            ProcessBuilder pbVal = new ProcessBuilder("/bin/bash", getPredictorScriptFilePath(), FileManager.contentFilePath + getInputFileName());
             final Process processVal = pbVal.start();            
             
             BufferedReader br = new BufferedReader(new InputStreamReader(processVal.getInputStream()));

@@ -1,0 +1,29 @@
+@relation CF
+
+@attribute $CF1 numeric
+@attribute $CF2 numeric
+@attribute $CF3 numeric
+@attribute $CF4 numeric
+@attribute $CF5 numeric
+@attribute $CF6 numeric
+@attribute $CF7 numeric
+@attribute $CF8 numeric
+@attribute $CF9 numeric
+@attribute $CF10 numeric
+@attribute $CF11 numeric
+@attribute $CF12 numeric
+@attribute $CF13 numeric
+@attribute $CF14 numeric
+@attribute $CF15 numeric
+@attribute $CF16 numeric
+@attribute $CF17 numeric
+@attribute $CF18 numeric
+@attribute $CF19 numeric
+@attribute $CF20 numeric
+@attribute $CF21 numeric
+@attribute $CF22 numeric
+@attribute $CF23 numeric
+@attribute $CF24 numeric
+@attribute @@class@@ {CF,non}
+
+@data
