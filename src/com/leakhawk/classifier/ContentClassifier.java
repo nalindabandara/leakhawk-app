@@ -101,7 +101,7 @@ public class ContentClassifier {
             String line;
             
             while ((line = br.readLine()) != null) {
-                System.out.println(line);
+                System.out.println(line+"\n");
                 sb.append( line );
                 pw.flush();
             }

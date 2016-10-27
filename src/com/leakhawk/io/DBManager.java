@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -97,5 +98,46 @@ public class DBManager {
 		} catch (SQLException e) {			
 			e.printStackTrace();
 		} 		
+	}
+	
+	public boolean isUserExists( String user ){
+		
+		int count = 0;           
+		Connection con = null;
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		try {
+			
+			if( user == null || user.trim().length() == 0){
+				return false;
+			}
+			
+			con = DBConnector.getConnection();
+			
+            String sql = "SELECT * FROM mal_user where user_name = ?";                     
+                                          
+            statement = con.prepareStatement( sql );
+            
+            statement.setString( ++count, user );
+            
+            rs = statement.executeQuery();   
+            
+            if( rs.next() ){
+            	return true;
+            }
+            
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				DBConnector.closeResultSet(rs);				
+				DBConnector.closeStatement(statement);
+				DBConnector.closeConnection(con);
+				
+			} catch (SQLException e) {				
+				e.printStackTrace();
+			}			
+		}
+		return false;
 	}
 }

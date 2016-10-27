@@ -3,6 +3,7 @@ package com.leakhawk.main;
 import java.util.List;
 
 import com.leakhawk.classifier.ContentClassifier;
+import com.leakhawk.classifier.EvidenceClassifier;
 import com.leakhawk.filter.ContextFilterComponent;
 import com.leakhawk.filter.PreFilterComponent;
 import com.leakhawk.io.DBManager;
@@ -41,8 +42,16 @@ public class LeakhawkJob extends Thread {
 			List<FeedEntry> contextFilteredList = contextFilterComponent.getFilteredEntryList();
 			fileManager.saveEntryList(contextFilteredList, CONTEXT_FILTER);
 			dbManager.saveContextFeedEntryBatch( contextFilteredList );
+						
 
 			for( FeedEntry entry : contextFilteredList ){
+				
+				
+			// Evidence Classifier
+				EvidenceClassifier evidenceClassifier = new EvidenceClassifier( dbManager );
+				evidenceClassifier.setEntry(entry);
+				evidenceClassifier.classify();
+				
 
 			// CC Classifier	
 				ContentClassifier ccClassifier = new ContentClassifier();				
@@ -50,16 +59,17 @@ public class LeakhawkJob extends Thread {
 				ccClassifier.setPredictorScriptFilePath("/home/nalinda/oct/leakhawk-app/Content/CC/CC_validator.sh");
 				ccClassifier.setInputFilePath( entry.getFullFilePath());	
 				ccClassifier.setInputFileName(entry.getEntryFileName() + ".CC.arff");
-					if( ccClassifier.classify().equals("CC")){
+					if( ccClassifier.classify().contains("CC")){
 						System.err.println("Possible Credit Card Breach");
+						entry.getClassifierResult().setCCPassed(true);
 					}
 				
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 
 				// PK Classifier	
 				ContentClassifier pkClassifier = new ContentClassifier();				
@@ -71,7 +81,13 @@ public class LeakhawkJob extends Thread {
 						System.err.println("Possible Private Key Compromise");
 					}
 
-
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
 				// WD Classifier	
 				ContentClassifier wdClassifier = new ContentClassifier();				
 				wdClassifier.setARFFScriptFilePath( "/home/nalinda/oct/leakhawk-app/Content/WD/WD_classifier.sh" );
@@ -81,7 +97,27 @@ public class LeakhawkJob extends Thread {
 						if( wdClassifier.classify().equals("WD")){
 							System.err.println("Possible Website defacement incident");
 						}					
-
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+				// WD Classifier	
+				ContentClassifier cfClassifier = new ContentClassifier();				
+				cfClassifier.setARFFScriptFilePath( "/home/nalinda/oct/leakhawk-app/Content/CF/CF_classifier.sh" );
+				cfClassifier.setPredictorScriptFilePath("/home/nalinda/oct/leakhawk-app/Content/CF/CF_validator.sh");
+				cfClassifier.setInputFilePath( entry.getFullFilePath());	
+				cfClassifier.setInputFileName(entry.getEntryFileName() + ".CF.arff");
+						if( cfClassifier.classify().equals("CF")){
+							System.err.println("Possible Configuration File exposure");
+						}	
+						
+				//Sensitivity Prediction
+				SensitivityPredictor sensitivityPredictor = new SensitivityPredictor();
+				sensitivityPredictor.setEntry(entry);
+				sensitivityPredictor.predictSensitivity();
 			}
 
 		}

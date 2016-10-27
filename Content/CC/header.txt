@@ -40,6 +40,6 @@
 @attribute #A numeric
 @attribute #NP numeric
 @attribute #CP numeric
-@attribute @@class@@ {CC,Non-CC}
+@attribute @@class@@ {CC,no}
 
 @data

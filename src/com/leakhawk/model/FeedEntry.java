@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import org.json.simple.JSONObject;
 
+import com.leakhawk.classifier.ClassifierResult;
 import com.leakhawk.filter.regex.RegExpResult;
 
 public class FeedEntry {
@@ -28,6 +29,8 @@ public class FeedEntry {
 	private String fullFilePath;
 
 	private HashMap<String, RegExpResult> contextFilterResultMap = new HashMap<String, RegExpResult>();
+	
+	private ClassifierResult classifierResult;
 	
 	public FeedEntry( JSONObject jsonObj ){
 		
@@ -121,6 +124,15 @@ public class FeedEntry {
 
 	public void setFullFilePath(String fullFilePath) {
 		this.fullFilePath = fullFilePath;
+	}	
+
+	public ClassifierResult getClassifierResult() {
+		return classifierResult;
+	}
+
+
+	public void setClassifierResult(ClassifierResult classifierResult) {
+		this.classifierResult = classifierResult;
 	}
 
 
