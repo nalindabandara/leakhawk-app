@@ -51,5 +51,5 @@ i="$1";
 	item="\$WD1"; for i in {2..16}; do item+=,"\$WD$i";done;item+="$string";eval "echo $item">>"/home/nalinda/oct/leakhawk-app/Content/WD/vector.txt"
 
 	cat "/home/nalinda/oct/leakhawk-app/Content/WD/header.txt" "/home/nalinda/oct/leakhawk-app/Content/WD/vector.txt" >> $j.WD.arff 
-	mv "$j.WD.arff" "/home/nalinda/oct/IN/sensitive/"
+	mv "$j.WD.arff" "/home/nalinda/oct/IN/ARFF/"
 	rm -rf "/home/nalinda/oct/leakhawk-app/Content/WD/vector.txt"	

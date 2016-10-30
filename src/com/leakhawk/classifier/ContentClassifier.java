@@ -91,8 +91,8 @@ public class ContentClassifier {
             final Process process = pb.start();
 
             Thread.sleep(1000);
-/*         System.out.println(FileManager.contentFilePath);
-         System.out.println(getInputFileName());*/
+//         System.out.println("rt"+FileManager.contentFilePath);
+//         System.out.println(getInputFileName());
             ProcessBuilder pbVal = new ProcessBuilder("/bin/bash", getPredictorScriptFilePath(), FileManager.contentFilePath + getInputFileName());
             final Process processVal = pbVal.start();            
             

@@ -43,5 +43,5 @@ i="$1";
 	item="\$CF1"; for i in {2..24}; do item+=,"\$CF$i";done;item+="$string";eval "echo $item">>"/home/nalinda/oct/leakhawk-app/Content/CF/vector.txt"
 #	k=$( basename "$i" ".txt");
 	cat "/home/nalinda/oct/leakhawk-app/Content/CF/header.txt" "/home/nalinda/oct/leakhawk-app/Content/CF/vector.txt" >> $j.CF.arff 
-	mv "$j.CF.arff" "/home/nalinda/oct/IN/sensitive/"
+	mv "$j.CF.arff" "/home/nalinda/oct/IN/ARFF/"
 	rm -rf "/home/nalinda/oct/leakhawk-app/Content/CF/vector.txt"	

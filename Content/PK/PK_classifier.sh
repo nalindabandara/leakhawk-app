@@ -50,5 +50,5 @@ i="$1";
 	item="\$PK1"; for i in {2..21}; do item+=,"\$PK$i";done;item+="$string";eval "echo $item">>"/home/nalinda/oct/leakhawk-app/Content/PK/vector.txt"
 #	k=$( basename "$i" ".txt");
 	cat "/home/nalinda/oct/leakhawk-app/Content/PK/header.txt" "/home/nalinda/oct/leakhawk-app/Content/PK/vector.txt" >> $j.PK.arff 
-	mv "$j.PK.arff" "/home/nalinda/oct/IN/sensitive/"
+	mv "$j.PK.arff" "/home/nalinda/oct/IN/ARFF/"
 	rm -rf "/home/nalinda/oct/leakhawk-app/Content/PK/vector.txt"	

@@ -61,6 +61,9 @@ public class LeakhawkJob extends Thread {
 				ccClassifier.setInputFileName(entry.getEntryFileName() + ".CC.arff");
 					if( ccClassifier.classify().contains("CC")){
 						System.err.println("Possible Credit Card Breach");
+						
+						fileManager.saveEntryAsFile(entry, FileManager.contentFilePath);
+						
 						entry.getClassifierResult().setCCPassed(true);
 					}
 				
