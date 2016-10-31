@@ -47,12 +47,6 @@ public class LeakhawkJob extends Thread {
 			for( FeedEntry entry : contextFilteredList ){
 				
 				
-			// Evidence Classifier
-				EvidenceClassifier evidenceClassifier = new EvidenceClassifier( dbManager );
-				evidenceClassifier.setEntry(entry);
-				evidenceClassifier.classify();
-				
-
 			// CC Classifier	
 				ContentClassifier ccClassifier = new ContentClassifier();				
 				ccClassifier.setARFFScriptFilePath( "/home/nalinda/oct/leakhawk-app/Content/CC/CC_classifier.sh" );
@@ -62,9 +56,9 @@ public class LeakhawkJob extends Thread {
 					if( ccClassifier.classify().contains("CC")){
 						System.err.println("Possible Credit Card Breach");
 						
-						fileManager.saveEntryAsFile(entry, FileManager.contentFilePath);
+						fileManager.saveEntryAsFile(entry, FileManager.sensitiveFilePath);
 						
-						entry.getClassifierResult().setCCPassed(true);
+				//		entry.getClassifierResult().setCCPassed(true);
 					}
 				
 					try {
@@ -116,6 +110,14 @@ public class LeakhawkJob extends Thread {
 						if( cfClassifier.classify().equals("CF")){
 							System.err.println("Possible Configuration File exposure");
 						}	
+						
+						
+				// Evidence Classifier
+				EvidenceClassifier evidenceClassifier = new EvidenceClassifier( dbManager );
+				evidenceClassifier.setEntry(entry);
+				evidenceClassifier.classify();
+						
+						
 						
 				//Sensitivity Prediction
 				SensitivityPredictor sensitivityPredictor = new SensitivityPredictor();

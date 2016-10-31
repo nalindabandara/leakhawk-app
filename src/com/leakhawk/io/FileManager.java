@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,7 +25,9 @@ public class FileManager {
 	public static String contextFilePath = LeakhawkUtils.properties.getProperty("context.file.path");
 	
 	public static String contentFilePath = LeakhawkUtils.properties.getProperty("content.file.path");
-		
+
+	public static String sensitiveFilePath = LeakhawkUtils.properties.getProperty("sensitive.file.path");
+	
 	public void saveEntryList( List<FeedEntry> entryList, String filterType ){
 
 		for (FeedEntry feedEntry : entryList) {
@@ -39,7 +42,7 @@ public class FileManager {
 	}
 	
 	
-	private void saveEntryAsFile(FeedEntry entry, String filePath ) {
+	public void saveEntryAsFile(FeedEntry entry, String filePath ) {
 		
 		BufferedReader reader = null;
 		BufferedWriter writer = null;
@@ -94,7 +97,10 @@ public class FileManager {
 	
 	public String getValidFileName( FeedEntry entry ) {
 				
-		String fileName = entry.getKey();
+		String fileName = "pastbin_file_" + LeakhawkUtils.getCurrentDateTime();
+		if( entry.getKey() != null && entry.getKey().length() > 0 ){
+			fileName = entry.getKey();
+		}
 		
 		String entryTitle = entry.getTitle();
 		

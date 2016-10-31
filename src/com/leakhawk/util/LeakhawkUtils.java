@@ -16,6 +16,8 @@ public class LeakhawkUtils {
 	public static Properties properties = new Properties();
 	
 	private static SimpleDateFormat ft = new SimpleDateFormat ("yyyy.MM.dd 'at' hh:mm:ss");
+	
+	private static SimpleDateFormat sft = new SimpleDateFormat ("yyyy.MM.dd_hh.mm");
 
 	// Reading the configuration file
 	public static void readConfigFile() {
@@ -81,5 +83,11 @@ public class LeakhawkUtils {
 		
 	     Date dNow = new Date( );	      
 	     System.out.println("Current Time: " + ft.format(dNow));
+	}
+	
+	public static String getCurrentDateTime(){
+		
+		Date dNow = new Date( );
+		return sft.format(dNow);
 	}
 }

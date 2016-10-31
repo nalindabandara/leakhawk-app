@@ -4,7 +4,7 @@ public class ClassifierResult {
 	
 	private boolean isDBPassed;
 			
-	private boolean isCCPassed;
+	private boolean isCCPassed=false;
 	
 	private boolean isPKPassed;
 
