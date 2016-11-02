@@ -2,6 +2,7 @@ package com.leakhawk.main;
 
 import java.util.List;
 
+import com.leakhawk.classifier.ClassifierResult;
 import com.leakhawk.classifier.ContentClassifier;
 import com.leakhawk.classifier.EvidenceClassifier;
 import com.leakhawk.filter.ContextFilterComponent;
@@ -46,7 +47,8 @@ public class LeakhawkJob extends Thread {
 
 			for( FeedEntry entry : contextFilteredList ){
 				
-				
+			entry.setClassifierResult( new ClassifierResult());	
+			
 			// CC Classifier	
 				ContentClassifier ccClassifier = new ContentClassifier();				
 				ccClassifier.setARFFScriptFilePath( "/home/nalinda/oct/leakhawk-app/Content/CC/CC_classifier.sh" );

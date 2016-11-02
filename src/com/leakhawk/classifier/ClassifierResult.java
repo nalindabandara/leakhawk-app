@@ -1,39 +1,47 @@
 package com.leakhawk.classifier;
 
 public class ClassifierResult {
-	
-	private boolean isDBPassed;
-			
-	private boolean isCCPassed=false;
-	
-	private boolean isPKPassed;
 
+	private boolean isCCClassifierPassed;
+	private boolean isPKClassifierPassed;
+	private boolean isWDClassifierPassed;
+	private boolean isCFClassifierPassed;
+	private boolean isDBClassifierPassed;
+	private boolean isUCClassifierPassed;
+	private boolean isDAClassifierPassed;	
+	private boolean isEOClassifierPassed;
+	private boolean isEAClassifierPassed;
+	
 	private EvidenceClassifierResult evidenceClassifierResult;
 	
+	public ClassifierResult(){
+		
+		this.evidenceClassifierResult =  new EvidenceClassifierResult();
+	}
 	
 	public boolean isDBPassed() {
-		return isDBPassed;
+		return isDBClassifierPassed;
 	}
 
 	public void setDBPassed(boolean isDBPassed) {
-		this.isDBPassed = isDBPassed;
+		this.isDBClassifierPassed = isDBPassed;
 	}
 
 
 	public boolean isCCPassed() {
-		return isCCPassed;
+		return isCCClassifierPassed;
 	}
 
 	public void setCCPassed(boolean isCCPassed) {
-		this.isCCPassed = isCCPassed;
+		this.isCCClassifierPassed = isCCPassed;
 	}
 
 	public boolean isPKPassed() {
-		return isPKPassed;
+		return isPKClassifierPassed;
 	}
 
 	public void setPKPassed(boolean isPKPassed) {
-		this.isPKPassed = isPKPassed;
+		this.isPKClassifierPassed = isPKPassed;
 	}
 
 	public EvidenceClassifierResult getEvidenceClassifierResult() {
@@ -47,7 +55,7 @@ public class ClassifierResult {
 	
 	public boolean isContentClassifierPassed(){
 		
-		if( isCCPassed || isPKPassed || isDBPassed) {
+		if( isCCClassifierPassed || isPKClassifierPassed || isDBClassifierPassed) {
 			return true;
 		}
 		return false;		

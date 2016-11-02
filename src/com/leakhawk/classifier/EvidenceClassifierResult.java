@@ -7,12 +7,15 @@ public class EvidenceClassifierResult {
 	
 	private boolean isUserExists;
 	
-	private boolean isClassfier1Passed;
+	private boolean isClassifier1Passed;
+	private boolean isClassifier2Passed;
+	private boolean isClassifier3Passed;
+	private boolean isClassifier4Passed;
+	private boolean isClassifier5Passed;
+	private boolean isClassifier6Passed;
+	private boolean isClassifier7Passed;
+	private boolean isClassifier8Passed;
 	
-	private boolean isClassfier2Passed;
-	
-	private boolean isClassfier3Passed;
-
 	public boolean isEvidencePassed() {
 		return isEvidencePassed;
 	}
@@ -29,29 +32,67 @@ public class EvidenceClassifierResult {
 		this.isUserExists = isUserExists;
 	}
 
-	public boolean isClassfier1Passed() {
-		return isClassfier1Passed;
+	public boolean isClassifier1Passed() {
+		return isClassifier1Passed;
 	}
 
-	public void setClassfier1Passed(boolean isClassfier1Passed) {
-		this.isClassfier1Passed = isClassfier1Passed;
+	public void setClassifier1Passed(boolean isClassifier1Passed) {
+		this.isClassifier1Passed = isClassifier1Passed;
 	}
 
-	public boolean isClassfier2Passed() {
-		return isClassfier2Passed;
+	public boolean isClassifier2Passed() {
+		return isClassifier2Passed;
 	}
 
-	public void setClassfier2Passed(boolean isClassfier2Passed) {
-		this.isClassfier2Passed = isClassfier2Passed;
+	public void setClassifier2Passed(boolean isClassifier2Passed) {
+		this.isClassifier2Passed = isClassifier2Passed;
 	}
 
-	public boolean isClassfier3Passed() {
-		return isClassfier3Passed;
+	public boolean isClassifier3Passed() {
+		return isClassifier3Passed;
 	}
 
-	public void setClassfier3Passed(boolean isClassfier3Passed) {
-		this.isClassfier3Passed = isClassfier3Passed;
+	public void setClassifier3Passed(boolean isClassfier3Passed) {
+		this.isClassifier3Passed = isClassfier3Passed;
 	}
 	
+	public boolean isClassifier4Passed() {
+		return isClassifier4Passed;
+	}
+
+	public void setClassifier4Passed(boolean isClassfier4Passed) {
+		this.isClassifier4Passed = isClassfier4Passed;
+	}
 	
+	public boolean isClassifier5Passed() {
+		return isClassifier5Passed;
+	}
+
+	public void setClassifier5Passed(boolean isClassfier5Passed) {
+		this.isClassifier5Passed = isClassfier5Passed;
+	}
+	
+	public boolean isClassifier6Passed() {
+		return isClassifier6Passed;
+	}
+
+	public void setClassifier6Passed(boolean isClassfier6Passed) {
+		this.isClassifier6Passed = isClassfier6Passed;
+	}
+	
+	public boolean isClassifier7Passed() {
+		return isClassifier7Passed;
+	}
+
+	public void setClassifier7Passed(boolean isClassfier7Passed) {
+		this.isClassifier7Passed = isClassfier7Passed;
+	}
+	
+	public boolean isClassifier8Passed() {
+		return isClassifier8Passed;
+	}
+
+	public void setClassifier8Passed(boolean isClassfier8Passed) {
+		this.isClassifier8Passed = isClassfier8Passed;
+	}
 }

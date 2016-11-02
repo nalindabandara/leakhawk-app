@@ -50,7 +50,7 @@ public class FileManager {
 		try {
 			
 			fileName = getValidFileName( entry );
-			
+			fileName = fileName.replace(" ", "_");
 			entry.setEntryFileName(fileName);
 			entry.setFullFilePath( filePath + "/" + fileName );
 			URL urlObj = new URL( entry.getScrapperUrl() );

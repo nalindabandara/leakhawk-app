@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import com.leakhawk.classifier.ClassifierResult;
+import com.leakhawk.classifier.EvidenceClassifierResult;
 import com.leakhawk.io.FileManager;
 import com.leakhawk.model.FeedEntry;
 
@@ -20,7 +21,11 @@ public class SensitivityPredictor {
 	public void predictSensitivity(){
 		
 		ClassifierResult classifierResult = getEntry().getClassifierResult();
-		
+		EvidenceClassifierResult evidenceClassifierResult = getEntry().getClassifierResult().getEvidenceClassifierResult();
+
+
+// Parameters from the Content Classifiers 
+
 		if( classifierResult.isCCPassed() ){
 			
 			setCreditCardNumberCount(Integer.parseInt( extractCCNumberCount() ) );
@@ -29,6 +34,51 @@ public class SensitivityPredictor {
 				sensitivityLabel = "CRITICAL";
 			}
 		}
+		
+
+
+// Parameters from the Evidence Classifiers 
+
+		if(evidenceClassifierResult.isUserExists()){
+			System.out.println("EVIDENCE: The poster has been involved in earlier hacking incidents");
+		}
+		
+		if(evidenceClassifierResult.isClassifier1Passed()){
+			System.out.println("EVIDENCE: SUBJECT: Evidence are found related to a hacking attack or data leakage");
+		}
+			
+		if(evidenceClassifierResult.isClassifier2Passed()){
+			System.out.println("EVIDENCE: SUBJECT: Evidence of a mentioning of hacking tool");
+		}
+					
+		if(evidenceClassifierResult.isClassifier3Passed()){
+			System.out.println("EVIDENCE: SUBJECT: Evidence of a mentioning of security vulnerability");
+		}		
+		
+		if(evidenceClassifierResult.isClassifier4Passed()){
+			System.out.println("EVIDENCE: SUBJECT: Evidence of a Hacker involvement/Hacktivist movement");
+		}	
+		
+		if(evidenceClassifierResult.isClassifier5Passed()){
+			System.out.println("EVIDENCE: BODY: Evidence are found related to a hacking attack or data leakage");
+		}			
+		
+		if(evidenceClassifierResult.isClassifier6Passed()){
+			System.out.println("EVIDENCE: BODY: Evidence of a mentioning of hacking tool");
+		}	
+		
+		if(evidenceClassifierResult.isClassifier7Passed()){
+			System.out.println("EVIDENCE: BODY: Evidence of a mentioning of security vulnerability");
+		}	
+		
+		if(evidenceClassifierResult.isClassifier8Passed()){
+			System.out.println("EVIDENCE: BODY: Evidence of a Hacker involvement/Hacktivist movement");
+		}	
+		
+		if(!evidenceClassifierResult.isUserExists() && !evidenceClassifierResult.isClassifier1Passed() && !evidenceClassifierResult.isClassifier2Passed() && !evidenceClassifierResult.isClassifier3Passed() && !evidenceClassifierResult.isClassifier4Passed() && !evidenceClassifierResult.isClassifier5Passed() && !evidenceClassifierResult.isClassifier6Passed() && !evidenceClassifierResult.isClassifier7Passed() && !evidenceClassifierResult.isClassifier8Passed()){
+			System.out.println("no evidence of a data leakage or hacking incident found!");
+		}			
+		
 		
 		System.out.println("Sensitivity : " + sensitivityLabel);
 	}
