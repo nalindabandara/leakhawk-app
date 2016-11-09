@@ -1,0 +1,30 @@
+@relation DB
+
+@attribute $DB1 numeric
+@attribute $DB2 numeric
+@attribute $DB3 numeric
+@attribute $DB4 numeric
+@attribute $DB5 numeric
+@attribute $DB6 numeric
+@attribute $DB7 numeric
+@attribute $DB8 numeric
+@attribute $DB9 numeric
+@attribute $DB10 numeric
+@attribute $DB11 numeric
+@attribute $DB12 numeric
+@attribute $DB13 numeric
+@attribute $DB14 numeric
+@attribute $DB15 numeric
+@attribute $DB16 numeric
+@attribute $DB17 numeric
+@attribute $DB18 numeric
+@attribute $DB19 numeric
+@attribute $DB20 numeric
+@attribute $DB21 numeric
+@attribute $DB22 numeric
+@attribute $DB23 numeric
+@attribute $DB24 numeric
+@attribute $DB25 numeric
+@attribute @@class@@ {DB,non}
+
+@data

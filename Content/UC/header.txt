@@ -1,0 +1,18 @@
+@relation train
+
+@attribute $UC1 numeric
+@attribute $UC2 numeric
+@attribute $UC3 numeric
+@attribute $UC4 numeric
+@attribute $UC5 numeric
+@attribute $UC6 numeric
+@attribute $UC7 numeric
+@attribute $UC8 numeric
+@attribute $UC9 numeric
+@attribute $UC10 numeric
+@attribute $UC11 numeric
+@attribute $UC12 numeric
+@attribute $UC13 numeric
+@attribute @@class@@ {UC,non}
+
+@data
