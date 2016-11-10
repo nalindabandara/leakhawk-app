@@ -1,0 +1,24 @@
+@relation train
+
+@attribute $DA1 numeric
+@attribute $DA2 numeric
+@attribute $DA3 numeric
+@attribute $DA4 numeric
+@attribute $DA5 numeric
+@attribute $DA6 numeric
+@attribute $DA7 numeric
+@attribute $DA8 numeric
+@attribute $DA9 numeric
+@attribute $DA10 numeric
+@attribute $DA11 numeric
+@attribute $DA12 numeric
+@attribute $DA13 numeric
+@attribute $DA14 numeric
+@attribute $DA15 numeric
+@attribute $DA16 numeric
+@attribute $DA17 numeric
+@attribute $DA18 numeric
+@attribute $DA19 numeric
+@attribute @@class@@ {DA,non}
+
+@data

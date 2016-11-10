@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import com.leakhawk.aggregator.PatbinAggregator;
+import com.leakhawk.aggregator.PastebinAggregator;
 import com.leakhawk.model.FeedEntry;
 import com.leakhawk.sensor.PastbinSensor;
 import com.leakhawk.util.LeakhawkUtils;
@@ -51,7 +51,7 @@ public class LeakhawkManager {
 		
 		PastbinSensor pastebinSensor = new PastbinSensor();	
 		
-		PatbinAggregator pastebinAggrgator = new PatbinAggregator();
+		PastebinAggregator pastebinAggrgator = new PastebinAggregator();
 		
 		pastebinSensor.setAggregator( pastebinAggrgator );		
 		pastebinSensor.start();

@@ -1,0 +1,12 @@
+@relation train
+
+@attribute $EC1 numeric
+@attribute $EC2 numeric
+@attribute $EC3 numeric
+@attribute $EC4 numeric
+@attribute $EC5 numeric
+@attribute $EC6 numeric
+@attribute $EC7 numeric
+@attribute @@class@@ {EC,non}
+
+@data

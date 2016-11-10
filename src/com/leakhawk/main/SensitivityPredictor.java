@@ -13,75 +13,117 @@ public class SensitivityPredictor {
 
 	private FeedEntry entry;
 
-	private String sensitivityLabel;
+	private String sensitivityLabel = "NULL";
 
 	private int creditCardNumberCount;
-	private boolean sensitiveData = false;
+	private int URLratio;
+	private boolean sensitiveData_CC = false;
+	private boolean sensitiveData_CF = false;
 
 
 	public void predictSensitivity(){
 
 		ClassifierResult classifierResult = getEntry().getClassifierResult();
-
-		//		System.out.println("CCPASSED"+classifierResult.isCCPassed());
-		// Parameters from the Content Classifiers 
-
-
-		// Parameters from the Content Classifiers 
+		
+//		System.out.println("checkpoint 1: "+ sensitivityLabel);
 
 		if( classifierResult.isCCPassed() ){
 			System.out.println("CONTENT: Possible Credit Card Breach");
-			
+
 			setCreditCardNumberCount(Integer.parseInt( extractCCNumberCount() ) );
-			
-			if ((creditCardNumberCount < 1) && ){
+
+//			System.out.println("checkpoint 2: "+ sensitivityLabel);
+
+			if ((creditCardNumberCount < 5) ){
+				sensitivityLabel = "LOW";
+			}
+
+			if( (creditCardNumberCount < 20) && (creditCardNumberCount > 5) ){
+				sensitivityLabel = "HIGH";
+			}
+
+			if((creditCardNumberCount > 0) && presenseOfSensitiveData_CC()){
 				
-			}
-			if( creditCardNumberCount > 30 ){
+//				System.out.println("checkpoint 3: "+ sensitivityLabel);
+				
 				sensitivityLabel = "CRITICAL";
+//				System.out.println("checkpoint 4: "+ sensitivityLabel);
 			}
-			
+
+
+			if( creditCardNumberCount > 20 ){
+//				System.out.println("checkpoint 5: "+ sensitivityLabel);
+				sensitivityLabel = "CRITICAL";
+//				System.out.println("checkpoint 6: "+ sensitivityLabel);
+			}
+
 		}	
 
 		if( classifierResult.isPKPassed() ){
-			System.err.println("CONTENT: Possible Private Key Compromise");
+			System.out.println("checkpoint 7: "+ sensitivityLabel);
+			System.out.println("CONTENT: Possible Private Key Compromise!");
+			sensitivityLabel = "CRITICAL";
 		}			
 
 
 		if( classifierResult.isWDPassed() ){
-			System.err.println("CONTENT: Possible Website defacement incident");
+
+			setURLratio(Integer.parseInt( extractURLratio() ));
+//			System.out.println("checkpoint 8: "+ sensitivityLabel);
+			System.out.println("CONTENT: Possible Website defacement incident!");
+
+			if( (URLratio > 0) && (URLratio <70)){
+				sensitivityLabel = "HIGH";
+			}
+
+			if( URLratio > 70){
+//				System.out.println("checkpoint 9: "+ sensitivityLabel);
+				sensitivityLabel = "CRITICAL";
+			}
 		}	
 
 
 		if( classifierResult.isCFPassed() ){
-			System.err.println("CONTENT: Possible Configuration file exposure");
+			System.out.println("CONTENT: Possible Configuration file exposure!");
+//			System.out.println("checkpoint 10: "+ sensitivityLabel);
+			if(presenseOfSensitiveData_CF()){
+//				System.out.println("checkpoint 11: "+ sensitivityLabel);
+				sensitivityLabel = "CRITICAL";
+//				System.out.println("checkpoint 12: "+ sensitivityLabel);
+			}
+//			System.out.println("checkpoint 13: "+ sensitivityLabel);
 		}	
 
 
 		if( classifierResult.isDBPassed() ){
-			System.err.println("CONTENT: Possible Database Dump!");
+			System.out.println("CONTENT: Possible Database Dump!");
 		}	
 
 
 		if( classifierResult.isUCPassed() ){
-			System.err.println("UC passed at sense pred");
+			System.out.println("CONTENT: Possible Credentials Dump!");
 		}	
 
 
 		if( classifierResult.isDAPassed() ){
-			System.err.println("DA passed at sense pred");
+			System.out.println("CONTENT: Possible DNS attack!");
 		}	
 
 
 		if( classifierResult.isEOPassed() ){
-			System.err.println("EO passed at sense pred");
+			System.out.println("CONTENT: Possible Email Dump!");
 		}	
 
 
-		if( classifierResult.isEAPassed() ){
-			System.err.println("EA passed at sense pred");
+		if( classifierResult.isECPassed() ){
+			System.out.println("CONTENT: Possible Email conversation!");
 		}	
 
+		
+		
+		
+		
+		
 		if( !classifierResult.isContentClassifierPassed() ){
 			System.out.println("NO sensitive data detected!");
 		}
@@ -131,10 +173,10 @@ public class SensitivityPredictor {
 			System.out.println("NO evidence of a data leakage or hacking incident found!");
 		}			
 
-		System.out.println("Sensitivity : " + sensitivityLabel);
+		System.err.println("Sensitivity : " + sensitivityLabel);
 	}
 
-
+//******************************** CC related functions ******************************************** //
 	public String extractCCNumberCount(){
 
 		StringBuilder sb = new StringBuilder();
@@ -148,25 +190,26 @@ public class SensitivityPredictor {
 			String line;
 
 			while ((line = br.readLine()) != null) {
-				System.out.println(line+"\n");
+				//				System.out.println(line+"\n");
 				sb.append( line );
 				pw.flush();
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}		
-		
+
 		System.out.println("CC count:"+sb.toString());
 		return sb.toString();
 	}
 
 
-	public boolean presenseOfSensitiveData(){
+
+	public boolean presenseOfSensitiveData_CC(){
 
 		StringBuilder sb = new StringBuilder();
 		try {
 
-			ProcessBuilder pbVal = new ProcessBuilder("/bin/bash", "/home/nalinda/oct/leakhawk-app/predictor/CC_counter.sh", FileManager.sensitiveFilePath + getEntry().getEntryFileName());
+			ProcessBuilder pbVal = new ProcessBuilder("/bin/bash", "/home/nalinda/oct/leakhawk-app/predictor/CC_sensitiveData.sh", FileManager.sensitiveFilePath + getEntry().getEntryFileName());
 			final Process processVal = pbVal.start();            
 
 			BufferedReader br = new BufferedReader(new InputStreamReader(processVal.getInputStream()));
@@ -174,28 +217,19 @@ public class SensitivityPredictor {
 			String line;
 
 			while ((line = br.readLine()) != null) {
-				System.out.println(line+"\n");
+				//				System.out.println(line+"\n");
 				sb.append( line );
 				pw.flush();
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}		
-		
-		System.out.println("CC count:"+sb.toString());
-		if( sb.toString() != null){
-			this.sensitiveData = true;
-		}
-			return sensitiveData;
-	}
-	
-	
-	public String getSensitivityLabel() {
-		return sensitivityLabel;
-	}
 
-	public void setSensitivityLabel(String sensitivityLabel) {
-		this.sensitivityLabel = sensitivityLabel;
+		//		System.out.println("Sensitive Data:"+sb.toString());
+		if( sb.toString() != null){
+			this.sensitiveData_CC = true;
+		}
+		return sensitiveData_CC;
 	}
 
 	public int getCreditCardNumberCount() {
@@ -204,6 +238,103 @@ public class SensitivityPredictor {
 
 	public void setCreditCardNumberCount(int creditCardNumberCount) {
 		this.creditCardNumberCount = creditCardNumberCount;
+	}
+
+
+//******************************** WD related functions ******************************************** //
+	
+	public String extractURLratio(){
+
+		StringBuilder sb = new StringBuilder();
+		try {
+
+			ProcessBuilder pbVal = new ProcessBuilder("/bin/bash", "/home/nalinda/oct/leakhawk-app/predictor/URL_counter.sh", FileManager.sensitiveFilePath + getEntry().getEntryFileName());
+			final Process processVal = pbVal.start();            
+
+			BufferedReader br = new BufferedReader(new InputStreamReader(processVal.getInputStream()));
+			PrintWriter pw = new PrintWriter(processVal.getOutputStream());
+			String line;
+
+			while ((line = br.readLine()) != null) {
+				//				System.out.println(line+"\n");
+				sb.append( line );
+				pw.flush();
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}		
+
+		System.out.println("URL ratio: "+sb.toString()+"\n");
+		return sb.toString();
+	}
+
+
+	public int getURLratio() {
+		return URLratio;
+	}
+
+	public void setURLratio(int uRLratio) {
+		this.URLratio = uRLratio;
+	}
+
+	//******************************** CF related functions ******************************************** //
+	
+	public boolean presenseOfSensitiveData_CF(){
+
+		StringBuilder sb = new StringBuilder();
+		try {
+
+			ProcessBuilder pbVal = new ProcessBuilder("/bin/bash", "/home/nalinda/oct/leakhawk-app/predictor/CF_sensitiveData.sh", FileManager.sensitiveFilePath + getEntry().getEntryFileName());
+			final Process processVal = pbVal.start();            
+
+			BufferedReader br = new BufferedReader(new InputStreamReader(processVal.getInputStream()));
+			PrintWriter pw = new PrintWriter(processVal.getOutputStream());
+			String line;
+
+			while ((line = br.readLine()) != null) {
+				//				System.out.println(line+"\n");
+				sb.append( line );
+				pw.flush();
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}		
+
+//				System.out.println("Sensitive Data:"+sb.toString());
+//				System.out.println("sensitiveData_CF1: "+sensitiveData_CF);
+		if( ! sb.toString().matches("0")){
+//			System.out.println("sensitiveData_CF2: "+sensitiveData_CF);
+			this.sensitiveData_CF = true;
+		}
+//		System.out.println("sensitiveData_CF3: "+sensitiveData_CF);
+		return sensitiveData_CF;
+	}	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//*************************************************************************************************** //
+	
+
+	public String getSensitivityLabel() {
+		return sensitivityLabel;
+	}
+
+	public void setSensitivityLabel(String sensitivityLabel) {
+		this.sensitivityLabel = sensitivityLabel;
 	}
 
 

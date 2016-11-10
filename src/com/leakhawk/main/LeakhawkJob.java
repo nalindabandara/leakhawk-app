@@ -174,9 +174,69 @@ public class LeakhawkJob extends Thread {
 				
 					
 				
+//******************************************* DA Classifier	*****************************************************//
+				
+				ContentClassifier daClassifier = new ContentClassifier();				
+				daClassifier.setARFFScriptFilePath( "/home/nalinda/oct/leakhawk-app/Content/DA/DA_classifier.sh" );
+				daClassifier.setPredictorScriptFilePath("/home/nalinda/oct/leakhawk-app/Content/DA/DA_validator.sh");
+				daClassifier.setInputFilePath( entry.getFullFilePath());	
+				daClassifier.setInputFileName(entry.getEntryFileName() + ".DA.arff");
+				System.out.println("Executing DA Classifier");
+				if( daClassifier.classify().contains("DA")){
+					fileManager.saveEntryAsFile(entry, FileManager.sensitiveFilePath);
+					entry.getClassifierResult().setDAPassed(true);
+				}	
+
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+								
+				
+//******************************************* EO Classifier	*****************************************************//
+				
+				ContentClassifier eoClassifier = new ContentClassifier();				
+				eoClassifier.setARFFScriptFilePath( "/home/nalinda/oct/leakhawk-app/Content/EO/EO_classifier.sh" );
+				eoClassifier.setPredictorScriptFilePath("/home/nalinda/oct/leakhawk-app/Content/EO/EO_validator.sh");
+				eoClassifier.setInputFilePath( entry.getFullFilePath());	
+				eoClassifier.setInputFileName(entry.getEntryFileName() + ".EO.arff");
+				System.out.println("Executing EO Classifier");
+				if( eoClassifier.classify().contains("EO")){
+					fileManager.saveEntryAsFile(entry, FileManager.sensitiveFilePath);
+					entry.getClassifierResult().setEOPassed(true);
+				}	
+
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}				
 				
 				
-				
+//******************************************* EC Classifier	*****************************************************//
+			
+			ContentClassifier ecClassifier = new ContentClassifier();				
+			ecClassifier.setARFFScriptFilePath( "/home/nalinda/oct/leakhawk-app/Content/EC/EC_classifier.sh" );
+			ecClassifier.setPredictorScriptFilePath("/home/nalinda/oct/leakhawk-app/Content/EC/EC_validator.sh");
+			ecClassifier.setInputFilePath( entry.getFullFilePath());	
+			ecClassifier.setInputFileName(entry.getEntryFileName() + ".EC.arff");
+			System.out.println("Executing EC Classifier");
+			if( ecClassifier.classify().contains("EC")){
+				fileManager.saveEntryAsFile(entry, FileManager.sensitiveFilePath);
+				entry.getClassifierResult().setECPassed(true);
+			}	
+
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+							
+							
 				
 				
 				

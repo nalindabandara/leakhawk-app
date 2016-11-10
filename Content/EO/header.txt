@@ -1,0 +1,10 @@
+@relation train
+
+@attribute $EO1 numeric
+@attribute $EO2 numeric
+@attribute $EO3 numeric
+@attribute $EO4 numeric
+@attribute $EO5 numeric
+@attribute @@class@@ {EO,non}
+
+@data

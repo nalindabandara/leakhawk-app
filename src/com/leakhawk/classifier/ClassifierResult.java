@@ -10,7 +10,7 @@ public class ClassifierResult {
 	private boolean isUCClassifierPassed;
 	private boolean isDAClassifierPassed;	
 	private boolean isEOClassifierPassed;
-	private boolean isEAClassifierPassed;
+	private boolean isECClassifierPassed;
 
 	private EvidenceClassifierResult evidenceClassifierResult;
 
@@ -106,15 +106,15 @@ public class ClassifierResult {
 		this.isEOClassifierPassed = isEOPassed;
 	}
 
-	//***************************** EA Classifier ************************/
+	//***************************** EC Classifier ************************/
 
 
-	public boolean isEAPassed() {
-		return isEAClassifierPassed;
+	public boolean isECPassed() {
+		return isECClassifierPassed;
 	}
 
-	public void setEAPassed(boolean isEAPassed) {
-		this.isEAClassifierPassed = isEAPassed;
+	public void setECPassed(boolean isECPassed) {
+		this.isECClassifierPassed = isECPassed;
 	}
 
 
