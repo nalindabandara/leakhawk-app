@@ -1,5 +1,7 @@
 package com.leakhawk.classifier;
 
+import com.leakhawk.model.FeedEntry;
+
 public class ClassifierResult {
 
 	private boolean isCCClassifierPassed;
@@ -11,6 +13,8 @@ public class ClassifierResult {
 	private boolean isDAClassifierPassed;	
 	private boolean isEOClassifierPassed;
 	private boolean isECClassifierPassed;
+	
+	private FeedEntry entry;
 
 	private EvidenceClassifierResult evidenceClassifierResult;
 
@@ -133,17 +137,24 @@ public class ClassifierResult {
 
 	public boolean isContentClassifierPassed(){
 
-		if( isCCClassifierPassed || isPKClassifierPassed || isDBClassifierPassed) {
+		if( isCCClassifierPassed || isPKClassifierPassed || isDBClassifierPassed || isCFClassifierPassed || isDAClassifierPassed || isECClassifierPassed || isEOClassifierPassed || isUCClassifierPassed || isWDClassifierPassed) {
 			return true;
 		}
+
 		return false;		
 	}
 
 	public String getClassifierResultMsg(){
-
+		
+		System.out.println("Classifier Results:");
 		if( !isContentClassifierPassed() && getEvidenceClassifierResult().isEvidencePassed() ){
 			return "Evidance Passed, Content Failed";
 		}
+		
+		if(evidenceClassifierResult.isUserExists()){
+			System.out.println("EVIDENCE: The poster has been involved in earlier hacking incidents");
+		}
+		
 		return "";
 	}
 }

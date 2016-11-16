@@ -1,7 +1,6 @@
 i=$1;
 
-j=$(grep -owiE "database dump|database dumped|db dumped|logins dump|db dump|db leak|data base dump|data base leak|database hack|db hack|login dump|SQL Injection|SQLi|SQL-i|Blind SQL-i|available databases|password" "$i"| wc -l);
+j=$(python "/home/nalinda/oct/leakhawk-app/predictor/Hash_ID_Finder-file.py" "$1"| grep -Ei "CRC|MD2|MD4|MD5|RC4|Haval128|GOST" | wc -l);
 
-k=$();
 
 echo $j;
