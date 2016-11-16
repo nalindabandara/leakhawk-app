@@ -17,6 +17,7 @@ public class SensitivityPredictor {
 
 	private int creditCardNumberCount;
 	private int email_hash_count;
+	private int email_count;
 	private int URLratio;
 	private int domainCount;
 	private boolean sensitiveData = false;
@@ -131,11 +132,27 @@ public class SensitivityPredictor {
 		if( classifierResult.isEOPassed() ){
 			System.out.println("CONTENT: Possible Email Dump!");
 			
+			setEmail_count( Integer.parseInt( EOcounter() ));
+			if (email_count < 50){
+				sensitivityLabel = "MEDIUM-EO";
+			}
+
+			if (email_count >= 50){
+				sensitivityLabel = "HIGH-EO";
+			}
 		}	
 
 
 		if( classifierResult.isECPassed() ){
 			System.out.println("CONTENT: Possible Email conversation!");
+			
+
+			if(presenseOfSensitiveData("/home/nalinda/oct/leakhawk-app/predictor/EC_sensitiveData.sh")){
+				sensitivityLabel = "CRITICAL-EC";
+			}
+
+			
+			
 		}	
 
 		if (classifierResult.isContentClassifierPassed() && evidenceClassifierResult.isEvidencePassed()){
@@ -355,6 +372,45 @@ public class SensitivityPredictor {
 
 
 
+	//******************************** EO related functions ******************************************** //
+
+	public String EOcounter(){
+
+		StringBuilder sb = new StringBuilder();
+		try {
+
+			ProcessBuilder pbVal = new ProcessBuilder("/bin/bash", "/home/nalinda/oct/leakhawk-app/predictor/EO_counter.sh", FileManager.sensitiveFilePath + getEntry().getEntryFileName());
+			final Process processVal = pbVal.start();            
+
+			BufferedReader br = new BufferedReader(new InputStreamReader(processVal.getInputStream()));
+			PrintWriter pw = new PrintWriter(processVal.getOutputStream());
+			String line;
+
+			while ((line = br.readLine()) != null) {
+				//				System.out.println(line+"\n");
+				sb.append( line );
+				pw.flush();
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}		
+
+		System.out.println("No of emails: "+sb.toString()+"\n");
+		return sb.toString();
+	}
+
+
+	public int getEmail_count() {
+		return email_count;
+	}
+
+	public void setEmail_count(int email_count) {
+		this.email_count = email_count;
+	}
+
+
+
+
 
 
 	//*************************************************************************************************** //
@@ -406,4 +462,8 @@ public class SensitivityPredictor {
 		}
 		return sensitiveData;
 	}
+	
+	
+	
+	
 }
