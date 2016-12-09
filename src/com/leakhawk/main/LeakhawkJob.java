@@ -45,7 +45,7 @@ public class LeakhawkJob extends Thread {
 			dbManager.saveContextFeedEntryBatch( contextFilteredList );
 
 
-			for( FeedEntry entry : contextFilteredList ){
+			for( FeedEntry entry : contextFilteredList ) {
 
 				entry.setClassifierResult( new ClassifierResult());	
 
@@ -218,44 +218,39 @@ public class LeakhawkJob extends Thread {
 				
 //******************************************* EC Classifier	*****************************************************//
 			
-			ContentClassifier ecClassifier = new ContentClassifier();				
-			ecClassifier.setARFFScriptFilePath( "/home/nalinda/oct/leakhawk-app/Content/EC/EC_classifier.sh" );
-			ecClassifier.setPredictorScriptFilePath("/home/nalinda/oct/leakhawk-app/Content/EC/EC_validator.sh");
-			ecClassifier.setInputFilePath( entry.getFullFilePath());	
-			ecClassifier.setInputFileName(entry.getEntryFileName() + ".EC.arff");
-			System.out.println("Executing EC Classifier");
-			if( ecClassifier.classify().contains("EC")){
-				fileManager.saveEntryAsFile(entry, FileManager.sensitiveFilePath);
-				entry.getClassifierResult().setECPassed(true);
-			}	
-
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				ContentClassifier ecClassifier = new ContentClassifier();				
+				ecClassifier.setARFFScriptFilePath( "/home/nalinda/oct/leakhawk-app/Content/EC/EC_classifier.sh" );
+				ecClassifier.setPredictorScriptFilePath("/home/nalinda/oct/leakhawk-app/Content/EC/EC_validator.sh");
+				ecClassifier.setInputFilePath( entry.getFullFilePath());	
+				ecClassifier.setInputFileName(entry.getEntryFileName() + ".EC.arff");
+				System.out.println("Executing EC Classifier");
+				if( ecClassifier.classify().contains("EC")){
+					fileManager.saveEntryAsFile(entry, FileManager.sensitiveFilePath);
+					entry.getClassifierResult().setECPassed(true);
+				}	
+	
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+								
 							
-							
-				
-				
-				
-				
-				
-				
 				// Evidence Classifier
 				EvidenceClassifier evidenceClassifier = new EvidenceClassifier( dbManager );
 				evidenceClassifier.setEntry(entry);
-				evidenceClassifier.classify();
-
-
-
+				evidenceClassifier.classify();				
+	
+	
 				//Sensitivity Prediction
 				SensitivityPredictor sensitivityPredictor = new SensitivityPredictor();
 				sensitivityPredictor.setEntry(entry);
 				sensitivityPredictor.predictSensitivity();
+				
+				entry.getClassifierResult().collectMessageList();
+				entry.getClassifierResult().printMessageList();
 			}
-
 		}
 	}
 

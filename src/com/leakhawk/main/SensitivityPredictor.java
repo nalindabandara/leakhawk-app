@@ -32,7 +32,7 @@ public class SensitivityPredictor {
 
 
 		if( classifierResult.isCCPassed() ){
-			System.out.println("CONTENT: Possible Credit Card Breach");
+			//System.out.println("CONTENT: Possible Credit Card Breach");
 
 			setCreditCardNumberCount(Integer.parseInt( extractCCNumberCount() ) );
 
@@ -46,28 +46,26 @@ public class SensitivityPredictor {
 
 			if((creditCardNumberCount > 0) && presenseOfSensitiveData("/home/nalinda/oct/leakhawk-app/predictor/CC_sensitiveData.sh")){
 				sensitivityLabel = "CRITICAL-CC";
-				System.out.println("Possible sensitive authentication data found!");
+				entry.getSensitivityResultMsgList().add( "Possible sensitive authentication data found!" );
+				//System.out.println("Possible sensitive authentication data found!");
 
 			}
-
 
 			if( creditCardNumberCount > 20 ){
 				sensitivityLabel = "CRITICAL-CC";
 			}
-
 		}	
 
 		if( classifierResult.isPKPassed() ){
-			System.out.println("CONTENT: Possible Private Key Compromise!");
+			//System.out.println("CONTENT: Possible Private Key Compromise!");
 			sensitivityLabel = "CRITICAL-PK";
-
 		}			
 
 
 		if( classifierResult.isWDPassed() ){
 
 			setURLratio(Integer.parseInt( extractURLratio() ));
-			System.out.println("CONTENT: Possible Website defacement incident!");
+			//System.out.println("CONTENT: Possible Website defacement incident!");
 
 			if( (URLratio > 0) && (URLratio <70)){
 				sensitivityLabel = "HIGH";
@@ -80,18 +78,18 @@ public class SensitivityPredictor {
 
 
 		if( classifierResult.isCFPassed() ){
-			System.out.println("CONTENT: Possible Configuration file exposure!");
-
+			//System.out.println("CONTENT: Possible Configuration file exposure!");
 
 			if(presenseOfSensitiveData("/home/nalinda/oct/leakhawk-app/predictor/CF_sensitiveData.sh")){
 				sensitivityLabel = "CRITICAL-CF";
-				System.out.println("Possible Plaintext passwords found!");
+				entry.getSensitivityResultMsgList().add( "Possible Plaintext passwords found!" );
+				//System.out.println("Possible Plaintext passwords found!");
 			}
 		}	
 
 
 		if( classifierResult.isDBPassed() ){
-			System.out.println("CONTENT: Possible Database Dump!");
+			//System.out.println("CONTENT: Possible Database Dump!");
 			sensitivityLabel = "HIGH-DB";
 
 			// if evidence passed, escalated to CRITICAL
@@ -104,7 +102,7 @@ public class SensitivityPredictor {
 
 
 		if( classifierResult.isUCPassed() ){
-			System.out.println("CONTENT: Possible Credentials Dump!");
+			//System.out.println("CONTENT: Possible Credentials Dump!");
 			setEmail_hash_count( Integer.parseInt( UCcounter() ));
 
 			if (email_hash_count > 30){
@@ -114,7 +112,7 @@ public class SensitivityPredictor {
 
 
 		if( classifierResult.isDAPassed() ){
-			System.out.println("CONTENT: Possible DNS attack!");
+			//System.out.println("CONTENT: Possible DNS attack!");
 
 
 			setDomainCount( Integer.parseInt( DAcounter() ));
@@ -130,7 +128,7 @@ public class SensitivityPredictor {
 
 
 		if( classifierResult.isEOPassed() ){
-			System.out.println("CONTENT: Possible Email Dump!");
+			//System.out.println("CONTENT: Possible Email Dump!");
 			
 			setEmail_count( Integer.parseInt( EOcounter() ));
 			if (email_count < 50){
@@ -144,78 +142,19 @@ public class SensitivityPredictor {
 
 
 		if( classifierResult.isECPassed() ){
-			System.out.println("CONTENT: Possible Email conversation!");
-			
-
+			//System.out.println("CONTENT: Possible Email conversation!");
+		
 			if(presenseOfSensitiveData("/home/nalinda/oct/leakhawk-app/predictor/EC_sensitiveData.sh")){
 				sensitivityLabel = "CRITICAL-EC";
-			}
-
-			
-			
+			}						
 		}	
 
 		if (classifierResult.isContentClassifierPassed() && evidenceClassifierResult.isEvidencePassed()){
 			sensitivityLabel = "CRITICAL-Evid+";
 		}
 
-
-		//		if( !classifierResult.isContentClassifierPassed() ){
-		//
-		//		}
-
-
-
-		// Parameters from the Evidence Classifiers 
-
-		if(evidenceClassifierResult.isUserExists()){
-			System.out.println("EVIDENCE: The poster has been involved in earlier hacking incidents");
-		}
-
-		if(evidenceClassifierResult.isClassifier1Passed()){
-			System.out.println("EVIDENCE: SUBJECT: Evidence are found related to a hacking attack or data leakage");
-			evidenceClassifierResult.setEvidencePassed(true);
-		}
-
-		if(evidenceClassifierResult.isClassifier2Passed()){
-			System.out.println("EVIDENCE: SUBJECT: Evidence of a mentioning of hacking tool");
-		}
-
-		if(evidenceClassifierResult.isClassifier3Passed()){
-			System.out.println("EVIDENCE: SUBJECT: Evidence of a mentioning of security vulnerability");
-		}		
-
-		if(evidenceClassifierResult.isClassifier4Passed()){
-			System.out.println("EVIDENCE: SUBJECT: Evidence of a Hacker involvement/Hacktivist movement");
-		}	
-
-		if(evidenceClassifierResult.isClassifier5Passed()){
-			System.out.println("EVIDENCE: BODY: Evidence are found related to a hacking attack or data leakage");
-		}			
-
-		if(evidenceClassifierResult.isClassifier6Passed()){
-			System.out.println("EVIDENCE: BODY: Evidence of a mentioning of hacking tool");
-		}	
-
-		if(evidenceClassifierResult.isClassifier7Passed()){
-			System.out.println("EVIDENCE: BODY: Evidence of a mentioning of security vulnerability");
-		}	
-
-		if(evidenceClassifierResult.isClassifier8Passed()){
-			System.out.println("EVIDENCE: BODY: Evidence of a Hacker involvement/Hacktivist movement");
-		}	
-
-
-
-		if(! classifierResult.isContentClassifierPassed()){
-			System.out.println("NO sensitive data detected!\n");
-		}
-
-		if(!evidenceClassifierResult.isEvidencePassed()){
-			System.out.println("NO evidence of a data leakage or hacking incident found!\n");
-		}			
-
-		System.err.println("Sensitivity : " + sensitivityLabel);
+		entry.getSensitivityResultMsgList().add( "Sensitivity : " + sensitivityLabel );
+		//System.err.println("Sensitivity : " + sensitivityLabel);
 
 		//		classifierResult.getClassifierResultMsg();
 	}
@@ -242,7 +181,8 @@ public class SensitivityPredictor {
 			e.printStackTrace();
 		}		
 
-		System.out.println("CC count:"+sb.toString());
+		//System.out.println("CC count:"+sb.toString());
+		entry.getSensitivityResultMsgList().add( "CC count:" + sb.toString() );
 		return sb.toString();
 	}
 
@@ -278,7 +218,8 @@ public class SensitivityPredictor {
 			e.printStackTrace();
 		}		
 
-		System.out.println("URL ratio: "+sb.toString()+"\n");
+		//System.out.println("URL ratio: "+sb.toString()+"\n");
+		entry.getSensitivityResultMsgList().add( "URL ratio: " + sb.toString() );
 		return sb.toString();
 	}
 
@@ -315,7 +256,8 @@ public class SensitivityPredictor {
 			e.printStackTrace();
 		}		
 
-		System.out.println("Email or Hash count:"+sb.toString());
+		//System.out.println("Email or Hash count:"+sb.toString());
+		entry.getSensitivityResultMsgList().add( "Email or Hash count:" + sb.toString() );
 		return sb.toString();
 	}
 
@@ -355,7 +297,8 @@ public class SensitivityPredictor {
 			e.printStackTrace();
 		}		
 
-		System.out.println("Related Domain Count: "+sb.toString()+"\n");
+		//System.out.println("Related Domain Count: "+sb.toString()+"\n");
+		entry.getSensitivityResultMsgList().add( "Related Domain Count: " + sb.toString() );
 		return sb.toString();
 	}
 
@@ -395,7 +338,8 @@ public class SensitivityPredictor {
 			e.printStackTrace();
 		}		
 
-		System.out.println("No of emails: "+sb.toString()+"\n");
+		//System.out.println("No of emails: "+sb.toString()+"\n");
+		entry.getSensitivityResultMsgList().add( "No of emails: "+sb.toString() );
 		return sb.toString();
 	}
 

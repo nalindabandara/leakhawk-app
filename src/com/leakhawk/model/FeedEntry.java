@@ -1,7 +1,9 @@
 package com.leakhawk.model;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.json.simple.JSONObject;
 
@@ -31,6 +33,10 @@ public class FeedEntry {
 	private HashMap<String, RegExpResult> contextFilterResultMap = new HashMap<String, RegExpResult>();
 	
 	private ClassifierResult classifierResult;
+	
+	private List<String> classifierResultMsgList = new ArrayList<String>();
+	
+	private List<String> sensitivityResultMsgList = new ArrayList<String>();
 	
 	public FeedEntry( JSONObject jsonObj ){
 		
@@ -195,4 +201,25 @@ public class FeedEntry {
 			return false;
 		return true;
 	}
+
+
+	public List<String> getClassifierResultMsgList() {
+		return classifierResultMsgList;
+	}
+
+
+	public void setClassifierResultMsgList(List<String> classifierResultMsgList) {
+		this.classifierResultMsgList = classifierResultMsgList;
+	}
+
+
+	public List<String> getSensitivityResultMsgList() {
+		return sensitivityResultMsgList;
+	}
+
+
+	public void setSensitivityResultMsgList(List<String> sensitivityResultMsgList) {
+		this.sensitivityResultMsgList = sensitivityResultMsgList;
+	}			
+	
 }
