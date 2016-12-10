@@ -155,8 +155,6 @@ public class FeedEntry {
 		return false;
 	}
 	
-
-
 	
 	@Override
 	public String toString() {
@@ -222,4 +220,107 @@ public class FeedEntry {
 		this.sensitivityResultMsgList = sensitivityResultMsgList;
 	}			
 	
+	
+	
+	public void collectClassifireResultMessageList (){
+		
+		if( this.classifierResult.isCCPassed() ){
+			getClassifierResultMsgList().add( "CONTENT: Possible Credit Card Breach" );
+		}
+		
+		if( this.classifierResult.isPKPassed() ){
+			getClassifierResultMsgList().add( "CONTENT: Possible Private Key Compromise!" );
+		}
+		
+		if( this.classifierResult.isWDPassed() ){
+			getClassifierResultMsgList().add( "CONTENT: Possible Website defacement incident!");
+		}
+		
+		if( this.classifierResult.isCFPassed() ){
+			getClassifierResultMsgList().add( "CONTENT: Possible Configuration file exposure!");
+		}
+		
+		if( this.classifierResult.isDBPassed() ){
+			getClassifierResultMsgList().add( "CONTENT: Possible Database Dump!");
+		}
+		
+		if( this.classifierResult.isDBPassed() ){
+			getClassifierResultMsgList().add( "CONTENT: Possible Database Dump!");
+		}
+		
+		if( this.classifierResult.isUCPassed() ){
+			getClassifierResultMsgList().add( "CONTENT: Possible Credentials Dump!");
+		}
+		
+		if( this.classifierResult.isDAPassed() ){
+			getClassifierResultMsgList().add( "CONTENT: Possible DNS attack!");
+		}
+		
+		if( this.classifierResult.isEOPassed() ){
+			getClassifierResultMsgList().add( "CONTENT: Possible Email Dump!");
+		}
+		
+		if( this.classifierResult.isECPassed() ){
+			getClassifierResultMsgList().add( "CONTENT: Possible Email conversation!");
+		}
+		
+		
+		
+		
+		if(this.classifierResult.getEvidenceClassifierResult().isUserExists()){
+			getClassifierResultMsgList().add("EVIDENCE: The poster has been involved in earlier hacking incidents");
+		}
+
+		if(this.classifierResult.getEvidenceClassifierResult().isClassifier1Passed()){
+			getClassifierResultMsgList().add("EVIDENCE: SUBJECT: Evidence are found related to a hacking attack or data leakage");
+			this.classifierResult.getEvidenceClassifierResult().setEvidencePassed(true);
+		}
+
+		if(this.classifierResult.getEvidenceClassifierResult().isClassifier2Passed()){
+			getClassifierResultMsgList().add("EVIDENCE: SUBJECT: Evidence of a mentioning of hacking tool");
+		}
+
+		if(this.classifierResult.getEvidenceClassifierResult().isClassifier3Passed()){
+			getClassifierResultMsgList().add("EVIDENCE: SUBJECT: Evidence of a mentioning of security vulnerability");
+		}		
+
+		if(this.classifierResult.getEvidenceClassifierResult().isClassifier4Passed()){
+			getClassifierResultMsgList().add("EVIDENCE: SUBJECT: Evidence of a Hacker involvement/Hacktivist movement");
+		}	
+
+		if(this.classifierResult.getEvidenceClassifierResult().isClassifier5Passed()){
+			getClassifierResultMsgList().add("EVIDENCE: BODY: Evidence are found related to a hacking attack or data leakage");
+		}			
+
+		if(this.classifierResult.getEvidenceClassifierResult().isClassifier6Passed()){
+			getClassifierResultMsgList().add("EVIDENCE: BODY: Evidence of a mentioning of hacking tool");
+		}	
+
+		if(this.classifierResult.getEvidenceClassifierResult().isClassifier7Passed()){
+			getClassifierResultMsgList().add("EVIDENCE: BODY: Evidence of a mentioning of security vulnerability");
+		}	
+
+		if(this.classifierResult.getEvidenceClassifierResult().isClassifier8Passed()){
+			getClassifierResultMsgList().add("EVIDENCE: BODY: Evidence of a Hacker involvement/Hacktivist movement");
+		}	
+
+		if(! this.classifierResult.isContentClassifierPassed()){
+			getClassifierResultMsgList().add("NO sensitive data detected!\n");
+		}
+
+		if(!this.classifierResult.getEvidenceClassifierResult().isEvidencePassed()){
+			getClassifierResultMsgList().add("NO evidence of a data leakage or hacking incident found!\n");
+		}			
+	}
+	
+	public synchronized void printMessageList() {
+		
+		for(String message : getClassifierResultMsgList() ){
+			System.out.println( message + "\n");			
+		}
+		
+		for(String message : getSensitivityResultMsgList() ){
+			System.out.println( message + "\n");			
+		}
+	}
 }

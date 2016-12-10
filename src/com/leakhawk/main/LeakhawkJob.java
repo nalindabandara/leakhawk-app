@@ -63,8 +63,7 @@ public class LeakhawkJob extends Thread {
 
 				try {
 					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+				} catch (InterruptedException e) {					
 					e.printStackTrace();
 				}
 
@@ -82,8 +81,7 @@ public class LeakhawkJob extends Thread {
 
 				try {
 					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+				} catch (InterruptedException e) {					
 					e.printStackTrace();
 				}
 
@@ -101,8 +99,7 @@ public class LeakhawkJob extends Thread {
 				}					
 				try {
 					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+				} catch (InterruptedException e) {					
 					e.printStackTrace();
 				}
 
@@ -121,8 +118,7 @@ public class LeakhawkJob extends Thread {
 
 				try {
 					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+				} catch (InterruptedException e) {					
 					e.printStackTrace();
 				}
 				
@@ -144,8 +140,7 @@ public class LeakhawkJob extends Thread {
 
 				try {
 					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+				} catch (InterruptedException e) {					
 					e.printStackTrace();
 				}
 				
@@ -166,8 +161,7 @@ public class LeakhawkJob extends Thread {
 
 				try {
 					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+				} catch (InterruptedException e) {					
 					e.printStackTrace();
 				}
 				
@@ -189,8 +183,7 @@ public class LeakhawkJob extends Thread {
 
 				try {
 					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+				} catch (InterruptedException e) {					
 					e.printStackTrace();
 				}
 								
@@ -210,8 +203,7 @@ public class LeakhawkJob extends Thread {
 
 				try {
 					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+				} catch (InterruptedException e) {					
 					e.printStackTrace();
 				}				
 				
@@ -231,8 +223,7 @@ public class LeakhawkJob extends Thread {
 	
 				try {
 					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+				} catch (InterruptedException e) {					
 					e.printStackTrace();
 				}
 								
@@ -248,8 +239,8 @@ public class LeakhawkJob extends Thread {
 				sensitivityPredictor.setEntry(entry);
 				sensitivityPredictor.predictSensitivity();
 				
-				entry.getClassifierResult().collectMessageList();
-				entry.getClassifierResult().printMessageList();
+				entry.collectClassifireResultMessageList();
+				entry.printMessageList();
 			}
 		}
 	}
