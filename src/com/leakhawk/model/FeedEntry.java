@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 
 import com.leakhawk.classifier.ClassifierResult;
@@ -12,6 +12,8 @@ import com.leakhawk.filter.regex.RegExpResult;
 
 public class FeedEntry {
 
+	private final static Logger logger = Logger.getLogger(FeedEntry.class);
+	
 	private String scrapperUrl;
 	
 	private String date;
@@ -316,11 +318,21 @@ public class FeedEntry {
 	public synchronized void printMessageList() {
 		
 		for(String message : getClassifierResultMsgList() ){
-			System.out.println( message + "\n");			
+			//System.out.println( message + "\n");
+			if( getKey() != null ){
+				logger.info( getKey() + " - " + message + "\n" );
+			} else {
+				logger.info( message + "\n" );
+			}			
 		}
 		
 		for(String message : getSensitivityResultMsgList() ){
-			System.out.println( message + "\n");			
+			//System.out.println( message + "\n");	
+			if( getKey() != null ){
+				logger.info( getKey() + " - " + message + "\n" );
+			} else {
+				logger.info( message + "\n" );
+			}
 		}
 	}
 }
